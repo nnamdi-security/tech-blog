@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Nnamdi's Dev Notes</title>
-        <link>https://YOUR-DOMAIN.example/</link>
+        <link>https://techbrosis.netlify.app/</link>
         <description>Practical programming tutorials, technology podcasts, and thoughtful articles.</description>
         <language>en</language>
         <lastBuildDate>Sat, 18 Jul 2026 10:00:00 GMT</lastBuildDate>
-        <atom:link href="https://YOUR-DOMAIN.example/feed.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://techbrosis.netlify.app/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title>JavaScript Array Methods Explained</title>
-            <link>https://YOUR-DOMAIN.example/posts/javascript-array-methods/</link>
-            <guid>https://YOUR-DOMAIN.example/posts/javascript-array-methods/</guid>
+            <link>https://techbrosis.netlify.app/posts/javascript-array-methods/</link>
+            <guid>https://techbrosis.netlify.app/posts/javascript-array-methods/</guid>
             <pubDate>Thu, 16 Jul 2026 10:00:00 GMT</pubDate>
             <description>A beginner-friendly walkthrough of map, filter, find, and reduce.</description>
         </item>
         <item>
             <title>The Skills Junior Developers Actually Need</title>
-            <link>https://YOUR-DOMAIN.example/posts/technology-podcast-episode-one/</link>
-            <guid>https://YOUR-DOMAIN.example/posts/technology-podcast-episode-one/</guid>
+            <link>https://techbrosis.netlify.app/posts/technology-podcast-episode-one/</link>
+            <guid>https://techbrosis.netlify.app/posts/technology-podcast-episode-one/</guid>
             <pubDate>Fri, 10 Jul 2026 10:00:00 GMT</pubDate>
             <description>A practical conversation about learning, portfolios, communication, and employability.</description>
         </item>
         <item>
             <title>Building Navigation That Works for Everyone</title>
-            <link>https://YOUR-DOMAIN.example/posts/building-accessible-navigation/</link>
-            <guid>https://YOUR-DOMAIN.example/posts/building-accessible-navigation/</guid>
+            <link>https://techbrosis.netlify.app/posts/building-accessible-navigation/</link>
+            <guid>https://techbrosis.netlify.app/posts/building-accessible-navigation/</guid>
             <pubDate>Fri, 03 Jul 2026 10:00:00 GMT</pubDate>
             <description>A practical guide to semantic, keyboard-friendly navigation.</description>
         </item>

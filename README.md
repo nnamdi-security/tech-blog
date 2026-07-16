@@ -81,7 +81,7 @@ tech-blog/
 
 Use your editor's project-wide search to find and replace:
 
-- `YOUR-DOMAIN.example`
+- `techbrosis.netlify.app`
 - `REPLACE-ME`
 - `REPLACE_ME`
 - `M7lc1UVf-VE`, which is a sample YouTube video ID
@@ -237,7 +237,7 @@ Every page has direct metadata in its `<head>`. Update:
 - Twitter/X title, description, and image
 - JSON-LD on individual post pages
 
-After Netlify assigns your site URL, replace every instance of `https://YOUR-DOMAIN.example` with the real production URL.
+After Netlify assigns your site URL, replace every instance of `https://techbrosis.netlify.app` with the real production URL.
 
 ## Social-preview images
 
@@ -274,7 +274,7 @@ Do not commit passwords, private API keys, `.env` files, or other secrets.
 4. Leave the build command empty.
 5. Set the publish directory to `.`.
 6. Deploy the site.
-7. Replace `YOUR-DOMAIN.example` throughout the repository with your Netlify URL.
+7. Replace `techbrosis.netlify.app` throughout the repository with your Netlify URL.
 8. Commit and push those replacements.
 
 Each new push to the connected production branch triggers another deployment automatically.
