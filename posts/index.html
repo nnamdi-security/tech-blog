@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts | Nnamdi&#x27;s Dev Notes</title>
+    <meta name="description" content="Browse all programming tutorials, technology podcast episodes, and practical software development articles.">
+    <meta name="author" content="Nnamdi Erastus">
+    <link rel="canonical" href="https://YOUR-DOMAIN.example/posts/">
+    <meta property="og:title" content="All Posts | Nnamdi&#x27;s Dev Notes">
+    <meta property="og:description" content="Browse all programming tutorials, technology podcast episodes, and practical software development articles.">
+    <meta property="og:image" content="https://YOUR-DOMAIN.example/assets/images/social/default-social.svg">
+    <meta property="og:url" content="https://YOUR-DOMAIN.example/posts/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Nnamdi's Dev Notes">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="All Posts | Nnamdi&#x27;s Dev Notes">
+    <meta name="twitter:description" content="Browse all programming tutorials, technology podcast episodes, and practical software development articles.">
+    <meta name="twitter:image" content="https://YOUR-DOMAIN.example/assets/images/social/default-social.svg">
+    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+</head>
+<body>
+    <div data-component="/components/header.html">
+        <noscript>
+            <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
+                <a href="/">Home</a>
+                <a href="/posts/">All posts</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </nav>
+        </noscript>
+    </div>
+
+    <main id="main-content">
+        <header class="page-hero"><div class="container page-hero__content"><span class="eyebrow">The complete library</span><h1>All posts</h1><p>Browse every tutorial, podcast episode, and written article. Use the filters to find exactly what you need.</p></div></header>
+        <section class="section" aria-labelledby="post-library-heading">
+            <div class="container">
+                <h2 class="visually-hidden" id="post-library-heading">Post library</h2>
+                <form class="filters" data-post-filters role="search">
+                    <div class="form-field"><label for="archive-search">Search posts</label><input id="archive-search" type="search" placeholder="Search titles, excerpts, or tags" data-search-input></div>
+                    <div class="form-field"><label for="archive-type">Content type</label><select id="archive-type" data-type-filter><option value="">All types</option><option value="tutorial">Tutorials</option><option value="podcast">Podcasts</option><option value="article">Articles</option></select></div>
+                    <div class="form-field"><label for="archive-tag">Tag</label><select id="archive-tag" data-tag-filter><option value="">All tags</option></select></div>
+                    <button class="button-secondary" type="button" data-clear-filters>Clear</button>
+                </form>
+                <div class="filter-summary" aria-live="polite"><p data-results-count>Loading posts…</p></div>
+                <div class="post-grid" data-filter-results>
+                    <noscript><article class="info-card"><h3>JavaScript is disabled</h3><p>The filterable archive needs JavaScript. You can still open the sample posts directly:</p><ul><li><a href="/posts/javascript-array-methods/">JavaScript Array Methods Explained</a></li><li><a href="/posts/technology-podcast-episode-one/">The Skills Junior Developers Actually Need</a></li><li><a href="/posts/building-accessible-navigation/">Building Navigation That Works for Everyone</a></li></ul></article></noscript>
+                </div>
+                <div class="empty-state" data-empty-state hidden><h3>No posts matched those filters</h3><p>Try removing a filter or using a shorter search phrase.</p></div>
+            </div>
+        </section>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+    <script src="/assets/js/components.js" defer></script>
+    <script src="/assets/js/navigation.js" defer></script>
+    <script type="module" src="/assets/js/post-renderer.js"></script>
+    <script type="module" src="/assets/js/filters.js"></script>
+</body>
+</html>

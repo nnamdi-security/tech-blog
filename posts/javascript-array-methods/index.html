@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Array Methods Explained | Nnamdi's Dev Notes</title>
+    <meta name="description" content="Learn how map, filter, find, and reduce help you transform real application data in this beginner-friendly tutorial.">
+    <meta name="author" content="Nnamdi Ileh">
+    <link rel="canonical" href="https://YOUR-DOMAIN.example/posts/javascript-array-methods/">
+    <meta property="og:title" content="JavaScript Array Methods Explained">
+    <meta property="og:description" content="Learn how map, filter, find, and reduce help you transform real application data.">
+    <meta property="og:image" content="https://YOUR-DOMAIN.example/assets/images/posts/javascript-array-methods.svg">
+    <meta property="og:url" content="https://YOUR-DOMAIN.example/posts/javascript-array-methods/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Nnamdi's Dev Notes">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JavaScript Array Methods Explained">
+    <meta name="twitter:description" content="A beginner-friendly walkthrough of useful JavaScript array methods.">
+    <meta name="twitter:image" content="https://YOUR-DOMAIN.example/assets/images/posts/javascript-array-methods.svg">
+    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting",
+                "headline": "JavaScript Array Methods Explained",
+                "description": "Learn how map, filter, find, and reduce help you transform real application data.",
+                "datePublished": "2026-07-16",
+                "dateModified": "2026-07-18",
+                "author": {"@type": "Person", "name": "Nnamdi Ileh"},
+                "image": "https://YOUR-DOMAIN.example/assets/images/posts/javascript-array-methods.svg",
+                "mainEntityOfPage": "https://YOUR-DOMAIN.example/posts/javascript-array-methods/"
+            },
+            {
+                "@type": "VideoObject",
+                "name": "JavaScript Array Methods Explained",
+                "description": "A beginner-friendly walkthrough of JavaScript array methods.",
+                "uploadDate": "2026-07-16",
+                "duration": "PT18M42S",
+                "thumbnailUrl": "https://YOUR-DOMAIN.example/assets/images/posts/javascript-array-methods.svg",
+                "embedUrl": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://YOUR-DOMAIN.example/"},
+                    {"@type": "ListItem", "position": 2, "name": "Posts", "item": "https://YOUR-DOMAIN.example/posts/"},
+                    {"@type": "ListItem", "position": 3, "name": "JavaScript Array Methods Explained"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body data-current-post="javascript-array-methods">
+    <div data-component="/components/header.html">
+        <noscript>
+            <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
+                <a href="/">Home</a>
+                <a href="/posts/">All posts</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </nav>
+        </noscript>
+    </div>
+
+    <main id="main-content">
+        <header class="post-header">
+            <div class="container post-header__inner">
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/posts/">Posts</a></li>
+                        <li aria-current="page">JavaScript Array Methods</li>
+                    </ol>
+                </nav>
+                <span class="eyebrow">Video tutorial</span>
+                <h1>JavaScript Array Methods Explained</h1>
+                <p class="post-header__description">Learn how <code>map</code>, <code>filter</code>, <code>find</code>, and <code>reduce</code> help you transform real application data.</p>
+                <div class="post-meta">
+                    <span>Nnamdi Ileh</span>
+                    <time datetime="2026-07-16">16 July 2026</time>
+                    <span>Updated 18 July 2026</span>
+                    <span>18:42 video</span>
+                </div>
+                <ul class="tag-list" aria-label="Post tags">
+                    <li><a class="tag" href="/posts/?tag=JavaScript">JavaScript</a></li>
+                    <li><a class="tag" href="/posts/?tag=Frontend">Frontend</a></li>
+                    <li><a class="tag" href="/posts/?tag=Tutorial">Tutorial</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <figure class="post-cover">
+            <img src="/assets/images/posts/javascript-array-methods.svg" alt="Illustration of JavaScript array values flowing through transformation steps" width="960" height="600">
+        </figure>
+
+        <section class="section">
+            <div class="container post-layout">
+                <article class="prose">
+                    <p>Arrays appear everywhere in JavaScript: product lists, API responses, search results, form data, and application state. The methods in this lesson help you work with those collections without writing repetitive loops.</p>
+
+                    <div class="callout">
+                        <h2>What you will learn</h2>
+                        <ul>
+                            <li>How callback functions work inside array methods.</li>
+                            <li>When to use <code>map</code>, <code>filter</code>, <code>find</code>, and <code>reduce</code>.</li>
+                            <li>How to avoid accidentally changing the original array.</li>
+                        </ul>
+                    </div>
+
+                    <h2 id="prerequisites">Prerequisites</h2>
+                    <p>You should understand variables, functions, arrays, objects, and basic <code>for</code> loops. You do not need experience with frameworks.</p>
+
+                    <h2 id="watch-tutorial">Watch the tutorial</h2>
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE" title="JavaScript Array Methods Explained video tutorial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <p class="video-fallback">Video not loading? <a href="https://www.youtube.com/watch?v=M7lc1UVf-VE">Watch it directly on YouTube</a>.</p>
+                    </div>
+
+                    <h2 id="code-examples">1. Start with a useful data set</h2>
+                    <p>We will work with a small list of course objects. Each object contains a title, category, price, and publication status.</p>
+                    <pre><code data-language="JavaScript">const courses = [
+    { title: "HTML Foundations", category: "frontend", price: 0, published: true },
+    { title: "Practical Laravel", category: "backend", price: 25000, published: true },
+    { title: "CSS Layout Systems", category: "frontend", price: 15000, published: false }
+];</code></pre>
+
+                    <h2>2. Transform every item with <code>map</code></h2>
+                    <p>Use <code>map</code> when you want one output value for every input item. It returns a new array and leaves the original array unchanged.</p>
+                    <pre><code data-language="JavaScript">const courseTitles = courses.map((course) => course.title);
+
+console.log(courseTitles);
+// ["HTML Foundations", "Practical Laravel", "CSS Layout Systems"]</code></pre>
+
+                    <h2>3. Keep matching items with <code>filter</code></h2>
+                    <p>Use <code>filter</code> when zero, one, or many items may match a condition.</p>
+                    <pre><code data-language="JavaScript">const publishedCourses = courses.filter(
+    (course) => course.published
+);</code></pre>
+
+                    <h2>4. Return one match with <code>find</code></h2>
+                    <p>Use <code>find</code> when you need the first matching item rather than an array of every match.</p>
+                    <pre><code data-language="JavaScript">const laravelCourse = courses.find(
+    (course) => course.title === "Practical Laravel"
+);
+
+if (laravelCourse) {
+    console.log(laravelCourse.price);
+}</code></pre>
+
+                    <h2>5. Combine values with <code>reduce</code></h2>
+                    <p><code>reduce</code> carries an accumulated value from one item to the next. Here, the accumulator begins at zero.</p>
+                    <pre><code data-language="JavaScript">const totalPrice = courses.reduce(
+    (total, course) => total + course.price,
+    0
+);
+
+console.log(totalPrice); // 40000</code></pre>
+
+                    <h2>Common mistakes</h2>
+                    <ul>
+                        <li>Using <code>map</code> but forgetting to return a value from the callback.</li>
+                        <li>Using <code>find</code> and assuming a result always exists.</li>
+                        <li>Using <code>reduce</code> for simple operations that would be clearer with another method.</li>
+                        <li>Changing objects inside a method without realising the original object is still referenced.</li>
+                    </ul>
+
+                    <h2>Useful resources</h2>
+                    <ul class="resource-list">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">MDN: Array.prototype.map()</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">MDN: Array.prototype.filter()</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce">MDN: Array.prototype.reduce()</a></li>
+                    </ul>
+
+                    <h2>Conclusion</h2>
+                    <p>Choose the method that best describes your intention: transform with <code>map</code>, select many with <code>filter</code>, select one with <code>find</code>, and combine values with <code>reduce</code>.</p>
+
+                    <div class="share-links" aria-label="Share this post">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2FYOUR-DOMAIN.example%2Fposts%2Fjavascript-array-methods%2F">Share on LinkedIn</a>
+                        <a href="https://x.com/intent/post?url=https%3A%2F%2FYOUR-DOMAIN.example%2Fposts%2Fjavascript-array-methods%2F&amp;text=JavaScript%20Array%20Methods%20Explained">Share on X</a>
+                        <a href="mailto:?subject=JavaScript%20Array%20Methods%20Explained&amp;body=https%3A%2F%2FYOUR-DOMAIN.example%2Fposts%2Fjavascript-array-methods%2F">Share by email</a>
+                    </div>
+                    <nav class="post-navigation" aria-label="Previous and next posts" data-post-navigation></nav>
+                </article>
+
+                <aside class="post-sidebar" aria-label="Tutorial summary">
+                    <section class="info-card"><h2>Lesson details</h2><p><strong>Level:</strong> Beginner</p><p><strong>Format:</strong> Video + written notes</p><p><strong>Duration:</strong> 18:42</p></section>
+                    <section class="info-card"><h2>Quick navigation</h2><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#watch-tutorial">Video</a></li><li><a href="#code-examples">Code examples</a></li></ul></section>
+                </aside>
+            </div>
+        </section>
+
+        <section class="related-posts" aria-labelledby="related-heading">
+            <div class="container"><div class="section-heading"><div><span class="eyebrow">Keep learning</span><h2 id="related-heading">Related posts</h2></div></div><div class="post-grid" data-related-posts></div></div>
+        </section>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+    <script src="/assets/js/components.js" defer></script>
+    <script src="/assets/js/navigation.js" defer></script>
+    <script type="module" src="/assets/js/post-renderer.js"></script>
+    <script src="/assets/js/copy-code.js" defer></script>
+</body>
+</html>

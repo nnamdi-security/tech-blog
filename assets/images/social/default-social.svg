@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f4f7f8"/>
+  <rect x="70" y="70" width="1060" height="490" rx="44" fill="#14232f"/>
+  <rect x="120" y="120" width="120" height="120" rx="28" fill="#0d766e"/>
+  <text x="180" y="196" text-anchor="middle" font-family="monospace" font-size="34" font-weight="700" fill="#fff">&lt;/&gt;</text>
+  <text x="120" y="330" font-family="Arial, sans-serif" font-size="78" font-weight="800" fill="#fff">Michael's Dev Notes</text>
+  <text x="120" y="410" font-family="Arial, sans-serif" font-size="36" fill="#c8d5da">Tutorials, podcasts, and practical tech articles.</text>
+  <rect x="120" y="468" width="350" height="12" rx="6" fill="#d9643a"/>
+</svg>
