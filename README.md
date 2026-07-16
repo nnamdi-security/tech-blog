@@ -1,4 +1,4 @@
-# Michael's Dev Notes
+# Nnamdi's Dev Notes
 
 A complete static technology blog built with semantic HTML5, modern CSS, and vanilla JavaScript. It contains video tutorials, podcast episodes, written articles, client-side search and filters, shared components, SEO metadata, structured data, an RSS feed, and a Netlify-compatible contact form.
 
