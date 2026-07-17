@@ -55,7 +55,28 @@ export const posts = [
         readingTime: "8 min read",
         featured: false,
         tags: ["Accessibility", "HTML", "JavaScript"]
-    }
+    },
+
+{
+    id: "javascript-variables",
+    title: "Understanding Variables in JavaScript",
+    slug: "javascript-variables",
+    type: "tutorial",
+    description: "A beginner-friendly video tutorial explaining what variables are in JavaScript, how to declare them with let, const, and var, and when to use each one.",
+    excerpt: "What variables are, how to declare them, and when to use let, const, or var.",
+    publishedAt: "2026-07-17",
+    updatedAt: null,
+    author: "Nnamdi",
+    thumbnail: "/assets/images/posts/javascript-variables.webp",
+    thumbnailAlt: "Thumbnail for the Understanding Variables in JavaScript tutorial",
+    url: "/posts/javascript-variables/",
+    youtubeId: "tWrxq7yiwxA",
+    duration: "03:56",
+    readingTime: null,
+    featured: false,
+    tags: ["JavaScript", "Beginners"]
+}
+
 ];
 
 export function getSortedPosts() {

@@ -8,6 +8,13 @@
         <lastBuildDate>Sat, 18 Jul 2026 10:00:00 GMT</lastBuildDate>
         <atom:link href="https://techbrosis.netlify.app/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
+            <title>Understanding Variables in JavaScript | Nnamdi's Dev Notes</title>
+            <link>https://techbrosis.netlify.app/posts/javascript-variables/</link>
+            <guid>https://techbrosis.netlify.app/posts/javascript-variables/</guid>
+            <pubDate>Fri, 17 Jul 2026 17:34:00 GMT</pubDate>
+            <description>A beginner-friendly video tutorial explaining what variables are in JavaScript, how to declare them with let, const, and var, and when to use each one.</description>
+        </item>
+        <item>
             <title>JavaScript Array Methods Explained</title>
             <link>https://techbrosis.netlify.app/posts/javascript-array-methods/</link>
             <guid>https://techbrosis.netlify.app/posts/javascript-array-methods/</guid>
