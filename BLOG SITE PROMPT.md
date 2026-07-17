@@ -18,17 +18,17 @@ It will be a static site uploaded to GitHub and hosted on netlify.
 
 Discoverability: basic SEO(title tags, meta descriptions, Open Graph tags so shares look good on LinkedIn/X) should be added.
 
-To avoid rewriting the header/footer on every page,  I will like to build one HTML "template" and copy it for each new post — or use JS to inject a shared header/footer via fetch() so that I don't need to duplicate nav/markup everywhere.
+To avoid rewriting the header/footer on every page,  I will like to build one HTML "template" and copy it for each new post or use JS to inject a shared header/footer via fetch() so that I don't need to duplicate nav/markup everywhere.
 
 
 
-Each post page needs:
+Each post page should have:
 
 1\. Title, date, short description (for SEO meta tags and social previews)
 
-2\. The embed — The <iframe> embed code from the Share button of Youtube.
+2\. The embed: The <iframe> embed code from the Share button of Youtube.
 
-3\. Show notes / write-up — a few paragraphs about what the video/episode covers, maybe a code snippet if it's a tutorial
+3\. Show notes / write-up: a few paragraphs about what the video/episode covers, maybe a code snippet if it's a tutorial
 
 4\. Tags (e.g. "JavaScript", "AI", "cybersecurity") so posts are filterable later
 
@@ -38,7 +38,7 @@ Homepage
 
 1\. A simple grid/list of post cards (thumbnail, title, date, short blurb), newest first.
 
-2\. Since there's no backend, I'll maintain this list by hand in the HTML, or write a small JS file (posts.js) that holds an array of post metadata and renders the cards dynamically — that way adding a new post means adding one object to an array, not editing the whole homepage layout.
+2\. Since there's no backend, I'll maintain this list by hand in the HTML, or write a small JS file (posts.js) that holds an array of post metadata and renders the cards dynamically, that way adding a new post means adding one object to an array, not editing the whole homepage layout.
 
 
 
@@ -46,15 +46,9 @@ Homepage
 
 \## Project Brief: Build a Static Technology Blog
 
-
-
 Act as a senior frontend developer, UI/UX designer, and patient coding mentor.
 
-
-
 I am building my first blog website as part of a full-stack development learning programme. Create a complete, professional, responsive technology blog using only:
-
-
 
 \* Semantic HTML5
 
