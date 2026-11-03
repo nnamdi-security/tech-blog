@@ -9,19 +9,19 @@
     <link rel="canonical" href="https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/">
     <meta property="og:title" content="Web Security Basics for Front-End Beginners">
     <meta property="og:description" content="Learn what XSS is, why innerHTML can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.">
-    <meta property="og:image" content="https://techbrosis.netlify.app/assets/images/posts/web-security-basics.svg">
+    <meta property="og:image" content="https://techbrosis.netlify.app/assets/images/posts/web-security-basics.jpg">
     <meta property="og:url" content="https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Nnamdi's Dev Notes">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Web Security Basics for Front-End Beginners">
     <meta name="twitter:description" content="XSS, innerHTML, and HTTP security headers explained with real code from a static site.">
-    <meta name="twitter:image" content="https://techbrosis.netlify.app/assets/images/posts/web-security-basics.svg">
-    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/post.css">
+    <meta name="twitter:image" content="https://techbrosis.netlify.app/assets/images/posts/web-security-basics.jpg">
+    <link rel="icon" href="../../assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="../../site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="../../feed.xml">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/post.css">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -32,7 +32,7 @@
                 "description": "Learn what XSS is, why innerHTML can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.",
                 "datePublished": "2026-11-03",
                 "author": {"@type": "Person", "name": "Nnamdi Ileh"},
-                "image": "https://techbrosis.netlify.app/assets/images/posts/web-security-basics.svg",
+                "image": "https://techbrosis.netlify.app/assets/images/posts/web-security-basics.jpg",
                 "mainEntityOfPage": "https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/"
             },
             {
@@ -48,13 +48,13 @@
     </script>
 </head>
 <body data-current-post="web-security-basics-for-beginners">
-    <div data-component="/components/header.html">
+    <div data-component="../../components/header.html">
         <noscript>
             <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
-                <a href="/">Home</a>
-                <a href="/posts/">All posts</a>
-                <a href="/about/">About</a>
-                <a href="/contact/">Contact</a>
+                <a href="../../">Home</a>
+                <a href="../../posts/">All posts</a>
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
             </nav>
         </noscript>
     </div>
@@ -62,16 +62,16 @@
     <main id="main-content">
         <header class="post-header">
             <div class="container post-header__inner">
-                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li aria-current="page">Web Security Basics</li></ol></nav>
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../posts/">Posts</a></li><li aria-current="page">Web Security Basics</li></ol></nav>
                 <span class="eyebrow">Written article</span>
                 <h1>Web Security Basics for Front-End Beginners</h1>
                 <p class="post-header__description">Learn what XSS is, why <code>innerHTML</code> can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.</p>
                 <div class="post-meta"><span>Nnamdi Ileh</span><time datetime="2026-11-03">3 November 2026</time><span>10 min read</span></div>
-                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="/posts/?tag=Security">Security</a></li><li><a class="tag" href="/posts/?tag=JavaScript">JavaScript</a></li><li><a class="tag" href="/posts/?tag=Netlify">Netlify</a></li></ul>
+                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="../../posts/?tag=Security">Security</a></li><li><a class="tag" href="../../posts/?tag=JavaScript">JavaScript</a></li><li><a class="tag" href="../../posts/?tag=Netlify">Netlify</a></li></ul>
             </div>
         </header>
 
-        <figure class="post-cover"><img src="/assets/images/posts/web-security-basics.svg" alt="A shield with a check mark in a browser window, next to a crossed-out script tag" width="960" height="600"></figure>
+        <figure class="post-cover"><img src="../../assets/images/posts/web-security-basics.webp" alt="Thumbnail reading Is Your Code Open To XSS, comparing innerHTML with textContent beside a padlock shield" width="960" height="600"></figure>
 
         <section class="section">
             <div class="container post-layout">
@@ -141,7 +141,7 @@ results.replaceChildren(message);</code></pre>
 
                     <h2>3. The next step: a Content Security Policy</h2>
                     <p>The strongest browser defence against XSS is a <strong>Content Security Policy</strong> (CSP). A CSP is a header that lists exactly where your page is allowed to load scripts, styles, images, and frames from. If an attacker manages to inject a script, the browser refuses to run it because it is not on the list.</p>
-                    <p>This blog is a good candidate for a strict CSP. It has no inline <code>&lt;script&gt;</code> tags apart from JSON-LD, which is data and is never run. It has no inline <code>style</code> attributes. The only third-party content is the YouTube embeds. A policy for it could look like this:</p>
+                    <p>This blog is a good candidate for a strict CSP. Its only inline <code>&lt;script&gt;</code> tags are JSON-LD, which is data and is never run, and one small script on the 404 page, which you can allow by adding its hash (<code>'sha256-…'</code>) to <code>script-src</code>. It has no inline <code>style</code> attributes. The only third-party content is the YouTube embeds. A policy for it could look like this:</p>
                     <pre><code data-language="TOML">[[headers]]
   for = "/*"
   [headers.values]
@@ -208,10 +208,10 @@ results.replaceChildren(message);</code></pre>
         <section class="related-posts" aria-labelledby="related-heading"><div class="container"><div class="section-heading"><div><span class="eyebrow">Keep improving</span><h2 id="related-heading">Related posts</h2></div></div><div class="post-grid" data-related-posts></div></div></section>
     </main>
 
-    <div data-component="/components/footer.html"></div>
-    <script src="/assets/js/components.js" defer></script>
-    <script src="/assets/js/navigation.js" defer></script>
-    <script type="module" src="/assets/js/post-renderer.js"></script>
-    <script src="/assets/js/copy-code.js" defer></script>
+    <div data-component="../../components/footer.html"></div>
+    <script src="../../assets/js/components.js" defer></script>
+    <script src="../../assets/js/navigation.js" defer></script>
+    <script type="module" src="../../assets/js/post-renderer.js"></script>
+    <script src="../../assets/js/copy-code.js" defer></script>
 </body>
 </html>

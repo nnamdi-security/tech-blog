@@ -9,8 +9,8 @@ export const posts = [
         publishedAt: "2026-11-03",
         updatedAt: null,
         author: "Nnamdi Ileh",
-        thumbnail: "/assets/images/posts/web-security-basics.svg",
-        thumbnailAlt: "A shield with a check mark in a browser window, next to a crossed-out script tag",
+        thumbnail: "/assets/images/posts/web-security-basics.webp",
+        thumbnailAlt: "Thumbnail reading Is Your Code Open To XSS, comparing innerHTML with textContent beside a padlock shield",
         url: "/posts/web-security-basics-for-beginners/",
         youtubeId: null,
         duration: null,
@@ -28,8 +28,8 @@ export const posts = [
         publishedAt: "2026-11-03",
         updatedAt: null,
         author: "Nnamdi Ileh",
-        thumbnail: "/assets/images/posts/building-blog-without-framework.svg",
-        thumbnailAlt: "A browser window beside three blocks labelled HTML, CSS, and JS",
+        thumbnail: "/assets/images/posts/building-blog-without-framework.webp",
+        thumbnailAlt: "Thumbnail reading No Framework. No Build Step. Just HTML, CSS and JS, with a zero dependencies badge",
         url: "/posts/building-a-blog-without-a-framework/",
         youtubeId: null,
         duration: null,
@@ -47,8 +47,8 @@ export const posts = [
         publishedAt: "2026-11-03",
         updatedAt: null,
         author: "Nnamdi Ileh",
-        thumbnail: "/assets/images/posts/git-github-beginner-mistakes.svg",
-        thumbnailAlt: "A Git commit graph with a branch splitting off and merging back into the main line",
+        thumbnail: "/assets/images/posts/git-github-beginner-mistakes.webp",
+        thumbnailAlt: "Thumbnail reading 5 Git Mistakes I Made So You Don't Have To, with a terminal error and a commit graph",
         url: "/posts/git-and-github-beginner-mistakes/",
         youtubeId: null,
         duration: null,
@@ -66,8 +66,8 @@ export const posts = [
         publishedAt: "2026-07-16",
         updatedAt: "2026-07-18",
         author: "Nnamdi Ileh",
-        thumbnail: "/assets/images/posts/javascript-array-methods.svg",
-        thumbnailAlt: "Illustration of JavaScript array values flowing through transformation steps",
+        thumbnail: "/assets/images/posts/javascript-array-methods.webp",
+        thumbnailAlt: "Thumbnail reading Array Methods, with a code window chaining filter and map",
         url: "/posts/javascript-array-methods/",
         youtubeId: "M7lc1UVf-VE",
         duration: "18:42",
@@ -85,8 +85,8 @@ export const posts = [
         publishedAt: "2026-07-10",
         updatedAt: null,
         author: "Nnamdi Ileh",
-        thumbnail: "/assets/images/posts/technology-podcast.svg",
-        thumbnailAlt: "Two microphones facing each other during a technology podcast",
+        thumbnail: "/assets/images/posts/technology-podcast.webp",
+        thumbnailAlt: "Podcast thumbnail reading The Skills Junior Devs Actually Need, with a microphone and sound wave",
         url: "/posts/technology-podcast-episode-one/",
         youtubeId: "M7lc1UVf-VE",
         duration: "42:15",
@@ -104,8 +104,8 @@ export const posts = [
         publishedAt: "2026-07-03",
         updatedAt: null,
         author: "Nnamdi Ileh",
-        thumbnail: "/assets/images/posts/accessible-navigation.svg",
-        thumbnailAlt: "Website navigation links with a visible keyboard focus indicator",
+        thumbnail: "/assets/images/posts/accessible-navigation.webp",
+        thumbnailAlt: "Thumbnail reading Navigation That Works For Everyone, with a focused menu link and Tab, Enter, and Esc keys",
         url: "/posts/building-accessible-navigation/",
         youtubeId: null,
         duration: null,
@@ -124,7 +124,7 @@ export const posts = [
     publishedAt: "2026-07-17",
     updatedAt: null,
     author: "Nnamdi",
-    thumbnail: "/assets/images/posts/javascript-variables.png",
+    thumbnail: "/assets/images/posts/javascript-variables.webp",
     thumbnailAlt: "Thumbnail for the Understanding Variables in JavaScript tutorial",
     url: "/posts/javascript-variables/",
     youtubeId: "tWrxq7yiwxA",
@@ -135,6 +135,18 @@ export const posts = [
 }
 
 ];
+
+// The site root, worked out from this file's URL (<root>/assets/js/posts.js),
+// so post links and thumbnails work on Netlify and on GitHub Pages.
+const SITE_ROOT = new URL("../../", import.meta.url);
+
+/**
+ * Turns a root-relative path from the data above, such as "/posts/my-post/",
+ * into a full URL inside the site root.
+ */
+export function resolveSitePath(path) {
+    return path.startsWith("/") ? new URL(path.slice(1), SITE_ROOT).href : path;
+}
 
 export function getSortedPosts() {
     return [...posts].sort(

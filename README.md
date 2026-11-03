@@ -33,7 +33,9 @@ The project uses two complementary content sources:
 1. `assets/js/posts.js` holds post metadata used to render cards, counts, related posts, sorting, search, and filters on the homepage and archive.
 2. Each post is still a real HTML page with its own full article, unique SEO metadata, social tags, and JSON-LD — so search engines and social crawlers never have to depend on client-side JavaScript to read the content.
 
-The shared header and footer live in `components/` and are loaded with `fetch()` by `assets/js/components.js`. Root-relative paths like `/components/header.html` keep working the same way no matter how deeply nested a post page is.
+The shared header and footer live in `components/` and are loaded with `fetch()` by `assets/js/components.js`.
+
+All paths in the HTML pages are **relative** (`./assets/...` on root pages, `../../assets/...` on post pages), so the site works both at a domain root (Netlify) and inside a sub-folder (GitHub Pages serves it from `/tech-blog/`). Avoid root-relative paths such as `/assets/css/styles.css` in pages: they break on GitHub Pages.
 
 ## Folder structure
 
@@ -100,17 +102,18 @@ Then visit `http://localhost:8000`. `npx serve .`, `php -S localhost:8000`, or V
 Each page includes a placeholder like:
 
 ```html
-<div data-component="/components/header.html"></div>
+<!-- On a post page (two folders below the root) -->
+<div data-component="../../components/header.html"></div>
 ```
 
-`components.js` finds every element with `data-component`, fetches the partial, and inserts it. Once loading completes, it emits a `components:loaded` event that `navigation.js` listens for to wire up the mobile menu, highlight the current page, and update the copyright year. If loading fails, a visible message appears and the console logs the details.
+`components.js` finds every element with `data-component`, fetches the partial, and inserts it. The partials themselves use root-style links (`/posts/`, `/about/`); `components.js` works out the site root from its own URL and rewrites those links so they point to the right place on any host. Post data in `posts.js` also uses root-style paths, which `resolveSitePath()` resolves the same way. Once loading completes, it emits a `components:loaded` event that `navigation.js` listens for to wire up the mobile menu, highlight the current page, and update the copyright year. If loading fails, a visible message appears and the console logs the details.
 
 ## Publishing a new post
 
-1. **Create a page folder** with a lowercase, hyphenated slug — `posts/my-new-post/index.html`. Copy the closest existing post as a starting point (tutorial, podcast, or article).
+1. **Create a page folder** with a lowercase, hyphenated slug — `posts/my-new-post/index.html`. Copy the closest existing post as a starting point (tutorial, podcast, or article). It already uses `../../` paths, which are correct for any page in `posts/<slug>/`.
 2. **Update the page's metadata and content**: `<title>`, meta description, canonical URL, Open Graph and Twitter/X tags, JSON-LD, the visible title/intro, author, dates, tags, thumbnail alt text, the article or show notes, and `data-current-post` on `<body>`.
 3. **Add one object to `assets/js/posts.js`** with matching `id`, `slug`, `type`, `publishedAt`, `thumbnail`, `url`, `youtubeId` (for videos), and `tags`. This one object drives cards, counts, filters, related posts, and prev/next navigation everywhere.
-4. **Add the thumbnail** to `assets/images/posts/` — 1600×1000 for the card, 1200×630 for social previews, WebP/AVIF preferred.
+4. **Add the thumbnail** to `assets/images/posts/`: a `.webp` for the card and cover, and a `.jpg` for `og:image`/`twitter:image`. The easiest way is the thumbnail generator in [`tools/thumbnails/`](tools/thumbnails/README.md), which renders both files in the site's style.
 5. **Update `sitemap.xml`** (and `feed.xml` if it belongs in the latest feed entries) — there's no build step, so these don't regenerate on their own.
 
 ## Adding a tag
@@ -130,6 +133,12 @@ The site deploys automatically to Netlify on every push to `main`:
 - **Contact form:** detected via `data-netlify="true"` on `contact/index.html`; a honeypot field cuts down on spam, and submissions land in the Netlify dashboard.
 - **Custom 404:** Netlify serves the root `404.html` automatically for any unmatched static URL — no SPA catch-all redirect needed, since every page here is a real multi-page route.
 
+The site also works on **GitHub Pages** (Settings → Pages → deploy from the `main` branch, `/ (root)` folder), where it is served at `https://nnamdi-security.github.io/tech-blog/`. Differences to know about:
+
+- Netlify Forms only works on Netlify, so the contact form will not submit on GitHub Pages.
+- `netlify.toml` (security and cache headers, pretty URLs) is ignored by GitHub Pages. An empty `.nojekyll` file tells GitHub Pages to serve the files as-is without running Jekyll.
+- GitHub Pages serves `404.html` at whatever URL was missing, so that page includes a tiny script that sets a `<base>` URL before its stylesheets load.
+
 ## Quality checklist
 
 Before publishing anything new:
@@ -147,7 +156,7 @@ Before publishing anything new:
 
 ## Performance notes
 
-No frameworks, no large libraries. YouTube iframes are lazy-loaded, though a video iframe still pulls more data than a thumbnail facade would — a thumbnail-first, click-to-load pattern is on the roadmap. Starter artwork is SVG for now; real photography should be compressed WebP or AVIF.
+No frameworks, no large libraries. YouTube iframes are lazy-loaded, though a video iframe still pulls more data than a thumbnail facade would — a thumbnail-first, click-to-load pattern is on the roadmap. Post thumbnails are compressed WebP (about 50 KB each), with JPG copies used only for social previews.
 
 ## Roadmap
 

@@ -1,4 +1,4 @@
-import { getPostById, getSortedPosts } from "./posts.js";
+import { getPostById, getSortedPosts, resolveSitePath } from "./posts.js";
 
 const TYPE_LABELS = {
     tutorial: "Video tutorial",
@@ -24,7 +24,7 @@ function escapeAttribute(value) {
 
 function createTagList(tags) {
     return tags
-        .map((tag) => `<li><a class="tag" href="/posts/?tag=${encodeURIComponent(tag)}">${escapeAttribute(tag)}</a></li>`)
+        .map((tag) => `<li><a class="tag" href="${escapeAttribute(resolveSitePath(`/posts/?tag=${encodeURIComponent(tag)}`))}">${escapeAttribute(tag)}</a></li>`)
         .join("");
 }
 
@@ -34,8 +34,8 @@ export function createPostCard(post) {
 
     return `
         <article class="post-card">
-            <a class="post-card__image-link" href="${escapeAttribute(post.url)}" tabindex="-1" aria-hidden="true">
-                <img class="post-card__image" src="${escapeAttribute(post.thumbnail)}" alt="" width="720" height="450" loading="lazy">
+            <a class="post-card__image-link" href="${escapeAttribute(resolveSitePath(post.url))}" tabindex="-1" aria-hidden="true">
+                <img class="post-card__image" src="${escapeAttribute(resolveSitePath(post.thumbnail))}" alt="" width="720" height="450" loading="lazy">
             </a>
 
             <div class="post-card__body">
@@ -45,7 +45,7 @@ export function createPostCard(post) {
                 </div>
 
                 <h3 class="post-card__title">
-                    <a href="${escapeAttribute(post.url)}">${escapeAttribute(post.title)}</a>
+                    <a href="${escapeAttribute(resolveSitePath(post.url))}">${escapeAttribute(post.title)}</a>
                 </h3>
 
                 <p>${escapeAttribute(post.excerpt)}</p>
@@ -86,7 +86,7 @@ function renderFeaturedPost(sortedPosts) {
     container.innerHTML = `
         <article class="featured-post">
             <div class="featured-post__media">
-                <img src="${escapeAttribute(post.thumbnail)}" alt="${escapeAttribute(post.thumbnailAlt)}" width="960" height="600">
+                <img src="${escapeAttribute(resolveSitePath(post.thumbnail))}" alt="${escapeAttribute(post.thumbnailAlt)}" width="960" height="600">
             </div>
 
             <div class="featured-post__content">
@@ -98,7 +98,7 @@ function renderFeaturedPost(sortedPosts) {
                     ${mediaMeta ? `<span>${escapeAttribute(mediaMeta)}</span>` : ""}
                 </div>
                 <ul class="tag-list" aria-label="Featured post tags">${createTagList(post.tags)}</ul>
-                <a class="button" href="${escapeAttribute(post.url)}">Read the featured post</a>
+                <a class="button" href="${escapeAttribute(resolveSitePath(post.url))}">Read the featured post</a>
             </div>
         </article>
     `;
@@ -166,7 +166,7 @@ function renderPostNavigation(sortedPosts) {
         }
 
         return `
-            <a href="${escapeAttribute(post.url)}">
+            <a href="${escapeAttribute(resolveSitePath(post.url))}">
                 <span>${label}</span>
                 <strong>${escapeAttribute(post.title)}</strong>
             </a>
