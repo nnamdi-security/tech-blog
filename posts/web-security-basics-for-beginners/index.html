@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Security Basics for Front-End Beginners | Nnamdi's Dev Notes</title>
+    <meta name="description" content="Learn what XSS is, why innerHTML can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.">
+    <meta name="author" content="Nnamdi Ileh">
+    <link rel="canonical" href="https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/">
+    <meta property="og:title" content="Web Security Basics for Front-End Beginners">
+    <meta property="og:description" content="Learn what XSS is, why innerHTML can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.">
+    <meta property="og:image" content="https://techbrosis.netlify.app/assets/images/posts/web-security-basics.svg">
+    <meta property="og:url" content="https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Nnamdi's Dev Notes">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web Security Basics for Front-End Beginners">
+    <meta name="twitter:description" content="XSS, innerHTML, and HTTP security headers explained with real code from a static site.">
+    <meta name="twitter:image" content="https://techbrosis.netlify.app/assets/images/posts/web-security-basics.svg">
+    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "headline": "Web Security Basics for Front-End Beginners",
+                "description": "Learn what XSS is, why innerHTML can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.",
+                "datePublished": "2026-11-03",
+                "author": {"@type": "Person", "name": "Nnamdi Ileh"},
+                "image": "https://techbrosis.netlify.app/assets/images/posts/web-security-basics.svg",
+                "mainEntityOfPage": "https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://techbrosis.netlify.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Posts", "item": "https://techbrosis.netlify.app/posts/"},
+                    {"@type": "ListItem", "position": 3, "name": "Web Security Basics for Front-End Beginners"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body data-current-post="web-security-basics-for-beginners">
+    <div data-component="/components/header.html">
+        <noscript>
+            <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
+                <a href="/">Home</a>
+                <a href="/posts/">All posts</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </nav>
+        </noscript>
+    </div>
+
+    <main id="main-content">
+        <header class="post-header">
+            <div class="container post-header__inner">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li aria-current="page">Web Security Basics</li></ol></nav>
+                <span class="eyebrow">Written article</span>
+                <h1>Web Security Basics for Front-End Beginners</h1>
+                <p class="post-header__description">Learn what XSS is, why <code>innerHTML</code> can be dangerous, and how HTTP security headers protect a static website, with examples from this blog's own code.</p>
+                <div class="post-meta"><span>Nnamdi Ileh</span><time datetime="2026-11-03">3 November 2026</time><span>10 min read</span></div>
+                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="/posts/?tag=Security">Security</a></li><li><a class="tag" href="/posts/?tag=JavaScript">JavaScript</a></li><li><a class="tag" href="/posts/?tag=Netlify">Netlify</a></li></ul>
+            </div>
+        </header>
+
+        <figure class="post-cover"><img src="/assets/images/posts/web-security-basics.svg" alt="A shield with a check mark in a browser window, next to a crossed-out script tag" width="960" height="600"></figure>
+
+        <section class="section">
+            <div class="container post-layout">
+                <article class="prose">
+                    <p>It is easy to assume security is a backend problem. This blog has no server, no database, and no login, so what could go wrong? Quite a lot, as it turns out. The browser runs your JavaScript, displays your content, and loads files from other websites, and each of those is a chance for something to go wrong.</p>
+                    <p>This article covers three security basics every front-end developer should understand. I use real code from this blog as the example throughout.</p>
+
+                    <h2>1. Cross-site scripting (XSS)</h2>
+                    <p>Cross-site scripting, or XSS, happens when an attacker gets their own JavaScript to run on your page. Once it runs, it can do anything your own code can do: read what the user types, change the page, send data to another server, or act as the user on your site.</p>
+                    <p>The most common cause is treating text as HTML. Imagine a search page that shows what the user searched for:</p>
+                    <pre><code data-language="JavaScript">// ❌ Dangerous: the search term is treated as HTML
+const query = new URLSearchParams(window.location.search).get("q");
+results.innerHTML = `&lt;p&gt;Results for ${query}&lt;/p&gt;`;</code></pre>
+                    <p>This works fine for a search like <code>javascript</code>. But the query comes from the URL, and anyone can write a URL. An attacker could send someone a link like this:</p>
+                    <pre><code data-language="Text">/posts/?q=&lt;img src=x onerror="alert(document.cookie)"&gt;</code></pre>
+                    <p>The browser parses the query as HTML, tries to load an image that does not exist, and runs the <code>onerror</code> code. A real attacker would run something more harmful than an alert.</p>
+
+                    <h3>The fix: treat text as text</h3>
+                    <p>When you only need to display text, use <code>textContent</code>. The browser displays the value exactly as written and never interprets it as HTML:</p>
+                    <pre><code data-language="JavaScript">// ✅ Safe: the search term is always displayed as text
+const message = document.createElement("p");
+message.textContent = `Results for ${query}`;
+results.replaceChildren(message);</code></pre>
+
+                    <h3>When you do need innerHTML, escape the data</h3>
+                    <p>Sometimes building an HTML string is the cleanest option. This blog builds every post card as a template string and inserts it with <code>innerHTML</code>. To keep that safe, every value goes through an escaping function first, which you can find in <code>post-renderer.js</code>:</p>
+                    <pre><code data-language="JavaScript">function escapeAttribute(value) {
+    return String(value)
+        .replaceAll("&amp;", "&amp;amp;")
+        .replaceAll('"', "&amp;quot;")
+        .replaceAll("&lt;", "&amp;lt;")
+        .replaceAll("&gt;", "&amp;gt;");
+}
+
+// Every value is escaped before it touches the HTML string
+`&lt;h3&gt;&lt;a href="${escapeAttribute(post.url)}"&gt;${escapeAttribute(post.title)}&lt;/a&gt;&lt;/h3&gt;`</code></pre>
+                    <p>After escaping, <code>&lt;script&gt;</code> becomes <code>&amp;lt;script&amp;gt;</code>, which the browser displays as text instead of running as code.</p>
+                    <p>Strictly speaking, the post data on this blog comes from a file I write myself, so it is trusted. But data has a habit of moving. If the posts ever come from a CMS, an API, or a guest author, the escaping is already in place. Escaping by default costs very little and saves you from having to remember later.</p>
+
+                    <div class="callout">
+                        <h2>Ask one question about every innerHTML</h2>
+                        <p>"Could any part of this string ever come from someone other than me?" If the answer is yes, or even maybe, use <code>textContent</code>, escape the values, or sanitise the HTML with a well-tested library such as DOMPurify.</p>
+                    </div>
+
+                    <h2>2. HTTP security headers</h2>
+                    <p>Every time a browser downloads a page, the server sends HTTP headers along with it. Some of these headers tell the browser to turn on extra protections. On Netlify you set them in <code>netlify.toml</code>, and this blog already sends four:</p>
+                    <pre><code data-language="TOML">[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"</code></pre>
+                    <p>Here is what each one does.</p>
+
+                    <h3>X-Content-Type-Options: nosniff</h3>
+                    <p>Browsers sometimes "sniff" a file to guess its type when they are not sure what it is. An attacker can abuse this by uploading a file that looks like an image but contains JavaScript. <code>nosniff</code> tells the browser to trust the declared content type and never guess.</p>
+
+                    <h3>X-Frame-Options: SAMEORIGIN</h3>
+                    <p>This stops other websites from loading your pages inside an <code>&lt;iframe&gt;</code>. Without it, an attacker could load your site invisibly on top of their own page and trick people into clicking buttons they cannot see. This attack is called <strong>clickjacking</strong>. <code>SAMEORIGIN</code> allows only your own site to frame your pages.</p>
+
+                    <h3>Referrer-Policy: strict-origin-when-cross-origin</h3>
+                    <p>When someone clicks a link to another website, the browser normally tells that website which page they came from. Full URLs can contain private information, such as search terms or IDs. This policy sends the full URL only within your own site and sends just the domain name to other sites.</p>
+
+                    <h3>Permissions-Policy</h3>
+                    <p>This blog never needs the camera, microphone, or location. Turning those features off with an empty list, <code>()</code>, means no script on the page can ever ask for them, including scripts inside embedded content.</p>
+
+                    <h2>3. The next step: a Content Security Policy</h2>
+                    <p>The strongest browser defence against XSS is a <strong>Content Security Policy</strong> (CSP). A CSP is a header that lists exactly where your page is allowed to load scripts, styles, images, and frames from. If an attacker manages to inject a script, the browser refuses to run it because it is not on the list.</p>
+                    <p>This blog is a good candidate for a strict CSP. It has no inline <code>&lt;script&gt;</code> tags apart from JSON-LD, which is data and is never run. It has no inline <code>style</code> attributes. The only third-party content is the YouTube embeds. A policy for it could look like this:</p>
+                    <pre><code data-language="TOML">[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy-Report-Only = """
+      default-src 'self';
+      script-src 'self';
+      style-src 'self';
+      img-src 'self' data:;
+      frame-src https://www.youtube-nocookie.com;
+      form-action 'self';
+      frame-ancestors 'self';
+      base-uri 'self';
+      object-src 'none'
+    """</code></pre>
+                    <p>Notice the header name: <code>Content-Security-Policy-Report-Only</code>. In report-only mode the browser does not block anything. It only logs violations in the developer console. That lets you browse the whole site, find anything the policy would break, and adjust it. Once the console stays clean, rename the header to <code>Content-Security-Policy</code> to start enforcing it.</p>
+                    <p>A CSP does not replace escaping. It is a second line of defence for the day something slips through.</p>
+
+                    <h2>Bonus: a few habits worth building early</h2>
+                    <ul>
+                        <li><strong>Never put secrets in front-end code.</strong> Anything in your HTML, CSS, or JavaScript can be read by anyone who opens the developer tools. API keys that must stay private belong on a server or in a serverless function.</li>
+                        <li><strong>Keep secrets out of Git.</strong> This blog's <code>.gitignore</code> excludes <code>.env</code> files for exactly this reason. A secret that has been pushed to a public repository should be treated as leaked, even if you delete it afterwards.</li>
+                        <li><strong>Protect forms from spam.</strong> The contact form uses a hidden honeypot field that people never fill in but bots do. Netlify quietly drops any submission that fills it in.</li>
+                        <li><strong>Prefer HTTPS everywhere.</strong> Netlify provides it automatically, but make sure every external link, image, and embed uses <code>https://</code> too.</li>
+                    </ul>
+
+                    <div class="callout">
+                        <h2>Security checklist for a static site</h2>
+                        <ul>
+                            <li>Untrusted text is displayed with <code>textContent</code>, not <code>innerHTML</code>.</li>
+                            <li>Any HTML built from data escapes every value.</li>
+                            <li><code>nosniff</code>, <code>X-Frame-Options</code>, <code>Referrer-Policy</code>, and <code>Permissions-Policy</code> headers are set.</li>
+                            <li>A Content Security Policy is tested in report-only mode, then enforced.</li>
+                            <li>No secrets in front-end code or Git history.</li>
+                            <li>Forms have spam protection.</li>
+                        </ul>
+                    </div>
+
+                    <h2>Key takeaways</h2>
+                    <p>A static site is a much smaller target than a full web application, but it is not a zero-risk one. Treat text as text, escape any data you turn into HTML, and let HTTP headers ask the browser to protect your visitors. You can check your own site's headers for free at <a href="https://securityheaders.com/">securityheaders.com</a>.</p>
+
+                    <h2>Related resources</h2>
+                    <ul class="resource-list">
+                        <li><a href="https://owasp.org/www-community/attacks/xss/">OWASP: Cross-site scripting (XSS)</a></li>
+                        <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP: XSS Prevention Cheat Sheet</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">MDN: Content Security Policy</a></li>
+                        <li><a href="https://docs.netlify.com/routing/headers/">Netlify Docs: Custom headers</a></li>
+                    </ul>
+
+                    <div class="share-links" aria-label="Share this article">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fweb-security-basics-for-beginners%2F">Share on LinkedIn</a>
+                        <a href="https://x.com/intent/post?url=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fweb-security-basics-for-beginners%2F&amp;text=Web%20Security%20Basics%20for%20Front-End%20Beginners">Share on X</a>
+                        <a href="mailto:?subject=Web%20Security%20Basics%20for%20Front-End%20Beginners&amp;body=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fweb-security-basics-for-beginners%2F">Share by email</a>
+                    </div>
+                    <nav class="post-navigation" aria-label="Previous and next posts" data-post-navigation></nav>
+                </article>
+
+                <aside class="post-sidebar" aria-label="Article summary">
+                    <section class="info-card"><h2>Article details</h2><p><strong>Level:</strong> Beginner</p><p><strong>Reading time:</strong> 10 minutes</p><p><strong>Focus:</strong> XSS and security headers</p></section>
+                    <section class="info-card"><h2>Try it yourself</h2><p>Open your browser's developer tools, go to the Network tab, reload the page, and click the first request. The Response Headers section shows every security header this page sends.</p></section>
+                </aside>
+            </div>
+        </section>
+
+        <section class="related-posts" aria-labelledby="related-heading"><div class="container"><div class="section-heading"><div><span class="eyebrow">Keep improving</span><h2 id="related-heading">Related posts</h2></div></div><div class="post-grid" data-related-posts></div></div></section>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+    <script src="/assets/js/components.js" defer></script>
+    <script src="/assets/js/navigation.js" defer></script>
+    <script type="module" src="/assets/js/post-renderer.js"></script>
+    <script src="/assets/js/copy-code.js" defer></script>
+</body>
+</html>

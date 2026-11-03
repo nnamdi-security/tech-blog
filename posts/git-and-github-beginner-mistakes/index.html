@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git and GitHub for Beginners: The Mistakes I Made So You Don't Have To | Nnamdi's Dev Notes</title>
+    <meta name="description" content="Real Git mistakes from this blog's own commit history: unrelated histories, surprise merge commits, a broken URL, and how to avoid each one.">
+    <meta name="author" content="Nnamdi Ileh">
+    <link rel="canonical" href="https://techbrosis.netlify.app/posts/git-and-github-beginner-mistakes/">
+    <meta property="og:title" content="Git and GitHub for Beginners: The Mistakes I Made So You Don't Have To">
+    <meta property="og:description" content="Real Git mistakes from this blog's own commit history: unrelated histories, surprise merge commits, a broken URL, and how to avoid each one.">
+    <meta property="og:image" content="https://techbrosis.netlify.app/assets/images/posts/git-github-beginner-mistakes.svg">
+    <meta property="og:url" content="https://techbrosis.netlify.app/posts/git-and-github-beginner-mistakes/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Nnamdi's Dev Notes">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Git and GitHub for Beginners: The Mistakes I Made So You Don't Have To">
+    <meta name="twitter:description" content="Unrelated histories, surprise merge commits, and a broken URL: real Git lessons from building this blog.">
+    <meta name="twitter:image" content="https://techbrosis.netlify.app/assets/images/posts/git-github-beginner-mistakes.svg">
+    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "headline": "Git and GitHub for Beginners: The Mistakes I Made So You Don't Have To",
+                "description": "Real Git mistakes from this blog's own commit history: unrelated histories, surprise merge commits, a broken URL, and how to avoid each one.",
+                "datePublished": "2026-11-03",
+                "author": {"@type": "Person", "name": "Nnamdi Ileh"},
+                "image": "https://techbrosis.netlify.app/assets/images/posts/git-github-beginner-mistakes.svg",
+                "mainEntityOfPage": "https://techbrosis.netlify.app/posts/git-and-github-beginner-mistakes/"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://techbrosis.netlify.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Posts", "item": "https://techbrosis.netlify.app/posts/"},
+                    {"@type": "ListItem", "position": 3, "name": "Git and GitHub for Beginners"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body data-current-post="git-and-github-beginner-mistakes">
+    <div data-component="/components/header.html">
+        <noscript>
+            <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
+                <a href="/">Home</a>
+                <a href="/posts/">All posts</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </nav>
+        </noscript>
+    </div>
+
+    <main id="main-content">
+        <header class="post-header">
+            <div class="container post-header__inner">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li aria-current="page">Git Beginner Mistakes</li></ol></nav>
+                <span class="eyebrow">Written article</span>
+                <h1>Git and GitHub for Beginners: The Mistakes I Made So You Don't Have To</h1>
+                <p class="post-header__description">Unrelated histories, surprise merge commits, and a broken URL. These are real lessons from this blog's own commit history, and how to avoid each one.</p>
+                <div class="post-meta"><span>Nnamdi Ileh</span><time datetime="2026-11-03">3 November 2026</time><span>9 min read</span></div>
+                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="/posts/?tag=Git">Git</a></li><li><a class="tag" href="/posts/?tag=Career">Career</a></li><li><a class="tag" href="/posts/?tag=Beginners">Beginners</a></li></ul>
+            </div>
+        </header>
+
+        <figure class="post-cover"><img src="/assets/images/posts/git-github-beginner-mistakes.svg" alt="A Git commit graph with a branch splitting off and merging back into the main line" width="960" height="600"></figure>
+
+        <section class="section">
+            <div class="container post-layout">
+                <article class="prose">
+                    <p>Git keeps a permanent record of everything you do, including your mistakes. Running <code>git log --graph</code> on this blog's repository shows a short history of me learning Git in public: an odd merge on day one, merge commits I never meant to create, and a bug fix that turned out to be a renamed folder.</p>
+                    <p>Here is what happened each time, why it happened, and what I do differently now.</p>
+
+                    <h2>Mistake 1: Starting the same project in two places</h2>
+                    <p>The first three commits in this repository look like this:</p>
+                    <pre><code data-language="Text">*   5bf3c1d Merge unrelated histories
+|\
+| * dc236c1 Initialize README with project title
+* f1e9e3e Build initial static technology blog</code></pre>
+                    <p>I built the first version of the site on my computer and ran <code>git init</code> there. Separately, I created the repository on GitHub and ticked the box to add a README. That gave me two repositories with no commits in common: one with my code, one with a README.</p>
+                    <p>When I tried to pull from GitHub, Git refused:</p>
+                    <pre><code data-language="Text">fatal: refusing to merge unrelated histories</code></pre>
+                    <p>Git was not broken. It was warning me that the two histories had nothing to do with each other, which is usually a sign that something is wrong. I fixed it by telling Git that I really did want to join them:</p>
+                    <pre><code data-language="Bash">git pull origin main --allow-unrelated-histories</code></pre>
+
+                    <h3>How to avoid it</h3>
+                    <p>Pick one place to start the project, and only one:</p>
+                    <ul>
+                        <li><strong>Starting on GitHub?</strong> Create the repository, then <code>git clone</code> it and build inside that folder.</li>
+                        <li><strong>Starting locally?</strong> Create an <em>empty</em> repository on GitHub, with no README, licence, or <code>.gitignore</code>, then connect it with <code>git remote add origin &lt;url&gt;</code> and push.</li>
+                    </ul>
+
+                    <h2>Mistake 2: Editing on GitHub and on my computer at the same time</h2>
+                    <p>Twice in the first few days, the history splits and joins back together:</p>
+                    <pre><code data-language="Text">*   2301e05 Merge branch 'main' of https://github.com/nnamdi-security/tech-blog
+|\
+| * ff6ec87 Update README.md
+* | bbda3f6 Replace placeholder with actual domain name
+|/</code></pre>
+                    <p>I had edited the README directly on GitHub's website, which created a commit there. Then, without pulling first, I made a commit on my computer. My local <code>main</code> and GitHub's <code>main</code> had each moved forward in different directions. When I ran <code>git pull</code>, Git joined them with an automatic merge commit. A few days later I did exactly the same thing with another file.</p>
+                    <p>No work was lost, so it was not a disaster. But these merge commits clutter the history, and if both edits had touched the same lines, I would have had a merge conflict to resolve.</p>
+
+                    <h3>How to avoid it</h3>
+                    <p>Make <code>git pull</code> the first thing you do every time you sit down to work:</p>
+                    <pre><code data-language="Bash">git pull origin main</code></pre>
+                    <p>If you have already committed locally and find that the remote has moved on, rebase instead of merging. Your local commits are replayed on top of the remote ones, giving you a straight-line history:</p>
+                    <pre><code data-language="Bash">git pull --rebase origin main</code></pre>
+                    <p>You can make this the default so you never have to remember it:</p>
+                    <pre><code data-language="Bash">git config --global pull.rebase true</code></pre>
+
+                    <h2>Mistake 3: A folder name that did not match the URL</h2>
+                    <p>This one reached the live site. My variables tutorial lived in <code>posts/variable-explained/</code>. But this blog builds every post card and "next post" link from a metadata file, and that file said the post's URL was <code>/posts/javascript-variables/</code>. Every link to the new post went to a 404 page.</p>
+                    <p>The fix was a single rename, and Git recorded it like this:</p>
+                    <pre><code data-language="Text">bug fix: navigation issue with the latest post-variable in javascript
+
+ posts/{variable-explained =&gt; javascript-variables}/index.html | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)</code></pre>
+                    <p>Zero lines changed, but a broken site was fixed. Git spotted that this was a move, not a delete and a new file, because the contents were identical.</p>
+
+                    <h3>How to avoid it</h3>
+                    <ul>
+                        <li>Decide the slug first, and use it everywhere: the folder name, the URL, the canonical link, and the metadata.</li>
+                        <li>Rename files with <code>git mv old-name new-name</code>, so the rename is staged in one step.</li>
+                        <li>Before pushing, run the site locally and click every link to the new page.</li>
+                    </ul>
+
+                    <h2>Mistake 4: Committing everything straight to main</h2>
+                    <p>Every commit in this repository's early history went directly onto <code>main</code>. Because Netlify deploys automatically from <code>main</code>, every push went straight to the live site, including the broken link above.</p>
+
+                    <h3>How to avoid it</h3>
+                    <p>Do your work on a branch, and only merge it into <code>main</code> when it is ready:</p>
+                    <pre><code data-language="Bash">git switch -c new-post-git-mistakes
+# ...write, commit, and test...
+git push -u origin new-post-git-mistakes</code></pre>
+                    <p>Then open a pull request on GitHub. Netlify can build a <strong>deploy preview</strong> for every pull request, a private copy of the site with your changes, so you can click around before anything goes live. Even when you work alone, a pull request gives you one last look at the full set of changes.</p>
+
+                    <h2>Mistake 5: Vague commit messages</h2>
+                    <p>Compare two messages from this repository:</p>
+                    <ul>
+                        <li><code>Replace placeholder with actual domain name</code>: clear, specific, and easy to find later.</li>
+                        <li><code>bug fix: navigation issue with the latest post-variable in javascript</code>: it says something was fixed, but not what the fix was.</li>
+                    </ul>
+                    <p>A good commit message completes the sentence "If applied, this commit will…". For the rename above, that would be:</p>
+                    <pre><code data-language="Text">Rename variables post folder to match its URL slug</code></pre>
+                    <p>Six months from now, when you search the history for why something changed, you will be glad you wrote it that way.</p>
+
+                    <div class="callout">
+                        <h2>My Git routine now</h2>
+                        <ul>
+                            <li>Start every session with <code>git pull</code>.</li>
+                            <li>Create a branch for each post or fix.</li>
+                            <li>Make small commits with messages that say what changed.</li>
+                            <li>Use <code>git status</code> and <code>git diff</code> before every commit.</li>
+                            <li>Open a pull request and check the deploy preview.</li>
+                            <li>Merge into <code>main</code> only when everything works.</li>
+                        </ul>
+                    </div>
+
+                    <h2>Key takeaways</h2>
+                    <p>Almost every beginner Git mistake comes from two copies of a repository drifting apart: your computer and GitHub, or <code>main</code> and the change you are working on. Pull before you start, work on branches, and let your commit messages explain your thinking. And do not be embarrassed by a messy history. Mine is public, and it taught me more than any tutorial did.</p>
+
+                    <h2>Related resources</h2>
+                    <ul class="resource-list">
+                        <li><a href="https://git-scm.com/book/en/v2">Pro Git book (free online)</a></li>
+                        <li><a href="https://docs.github.com/en/get-started/using-git/about-git">GitHub Docs: About Git</a></li>
+                        <li><a href="https://cbea.ms/git-commit/">How to Write a Git Commit Message</a></li>
+                        <li><a href="https://docs.netlify.com/site-deploys/deploy-previews/">Netlify Docs: Deploy Previews</a></li>
+                    </ul>
+
+                    <div class="share-links" aria-label="Share this article">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fgit-and-github-beginner-mistakes%2F">Share on LinkedIn</a>
+                        <a href="https://x.com/intent/post?url=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fgit-and-github-beginner-mistakes%2F&amp;text=Git%20and%20GitHub%20for%20Beginners%3A%20The%20Mistakes%20I%20Made%20So%20You%20Don%27t%20Have%20To">Share on X</a>
+                        <a href="mailto:?subject=Git%20and%20GitHub%20for%20Beginners&amp;body=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fgit-and-github-beginner-mistakes%2F">Share by email</a>
+                    </div>
+                    <nav class="post-navigation" aria-label="Previous and next posts" data-post-navigation></nav>
+                </article>
+
+                <aside class="post-sidebar" aria-label="Article summary">
+                    <section class="info-card"><h2>Article details</h2><p><strong>Level:</strong> Beginner</p><p><strong>Reading time:</strong> 9 minutes</p><p><strong>Focus:</strong> Everyday Git workflow</p></section>
+                    <section class="info-card"><h2>See the real history</h2><p>Clone <a href="https://github.com/nnamdi-security/tech-blog">this blog's repository</a> and run <code>git log --oneline --graph</code> to see every commit mentioned here.</p></section>
+                </aside>
+            </div>
+        </section>
+
+        <section class="related-posts" aria-labelledby="related-heading"><div class="container"><div class="section-heading"><div><span class="eyebrow">Keep improving</span><h2 id="related-heading">Related posts</h2></div></div><div class="post-grid" data-related-posts></div></div></section>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+    <script src="/assets/js/components.js" defer></script>
+    <script src="/assets/js/navigation.js" defer></script>
+    <script type="module" src="/assets/js/post-renderer.js"></script>
+    <script src="/assets/js/copy-code.js" defer></script>
+</body>
+</html>
