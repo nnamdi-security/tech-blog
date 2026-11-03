@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Built This Blog Without a Framework | Nnamdi's Dev Notes</title>
+    <meta name="description" content="A behind-the-scenes look at how this blog runs on plain HTML, CSS, and JavaScript, with no framework, no build step, and no package manager.">
+    <meta name="author" content="Nnamdi Ileh">
+    <link rel="canonical" href="https://techbrosis.netlify.app/posts/building-a-blog-without-a-framework/">
+    <meta property="og:title" content="How I Built This Blog Without a Framework">
+    <meta property="og:description" content="A behind-the-scenes look at how this blog runs on plain HTML, CSS, and JavaScript, with no framework, no build step, and no package manager.">
+    <meta property="og:image" content="https://techbrosis.netlify.app/assets/images/posts/building-blog-without-framework.svg">
+    <meta property="og:url" content="https://techbrosis.netlify.app/posts/building-a-blog-without-a-framework/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Nnamdi's Dev Notes">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How I Built This Blog Without a Framework">
+    <meta name="twitter:description" content="Plain HTML, CSS, and JavaScript on Netlify: the architecture, the trade-offs, and the bugs.">
+    <meta name="twitter:image" content="https://techbrosis.netlify.app/assets/images/posts/building-blog-without-framework.svg">
+    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "headline": "How I Built This Blog Without a Framework",
+                "description": "A behind-the-scenes look at how this blog runs on plain HTML, CSS, and JavaScript, with no framework, no build step, and no package manager.",
+                "datePublished": "2026-11-03",
+                "author": {"@type": "Person", "name": "Nnamdi Ileh"},
+                "image": "https://techbrosis.netlify.app/assets/images/posts/building-blog-without-framework.svg",
+                "mainEntityOfPage": "https://techbrosis.netlify.app/posts/building-a-blog-without-a-framework/"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://techbrosis.netlify.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Posts", "item": "https://techbrosis.netlify.app/posts/"},
+                    {"@type": "ListItem", "position": 3, "name": "How I Built This Blog Without a Framework"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body data-current-post="building-a-blog-without-a-framework">
+    <div data-component="/components/header.html">
+        <noscript>
+            <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
+                <a href="/">Home</a>
+                <a href="/posts/">All posts</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </nav>
+        </noscript>
+    </div>
+
+    <main id="main-content">
+        <header class="post-header">
+            <div class="container post-header__inner">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li aria-current="page">Building Without a Framework</li></ol></nav>
+                <span class="eyebrow">Written article</span>
+                <h1>How I Built This Blog Without a Framework</h1>
+                <p class="post-header__description">A behind-the-scenes look at how this blog runs on plain HTML, CSS, and JavaScript, with no framework, no build step, and no package manager.</p>
+                <div class="post-meta"><span>Nnamdi Ileh</span><time datetime="2026-11-03">3 November 2026</time><span>9 min read</span></div>
+                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="/posts/?tag=HTML">HTML</a></li><li><a class="tag" href="/posts/?tag=JavaScript">JavaScript</a></li><li><a class="tag" href="/posts/?tag=Netlify">Netlify</a></li><li><a class="tag" href="/posts/?tag=Case%20Study">Case Study</a></li></ul>
+            </div>
+        </header>
+
+        <figure class="post-cover"><img src="/assets/images/posts/building-blog-without-framework.svg" alt="A browser window beside three blocks labelled HTML, CSS, and JS" width="960" height="600"></figure>
+
+        <section class="section">
+            <div class="container post-layout">
+                <article class="prose">
+                    <p>When I started this blog as part of my fullstack training, the obvious move was to pick a framework: Next.js, Astro, Gatsby, or a static site generator like Hugo. I went the other way. Every page on this site is a hand-written HTML file, styled with plain CSS and given a little behaviour with vanilla JavaScript. There is no <code>package.json</code>, no <code>node_modules</code> folder, and no build step. Netlify serves the files exactly as they are in the repository.</p>
+                    <p>This article explains how the pieces fit together, why I made each choice, and where the approach has already caused me problems.</p>
+
+                    <h2>Why no framework?</h2>
+                    <p>Three reasons:</p>
+                    <ul>
+                        <li><strong>Learning.</strong> Frameworks hide a lot of decisions. Building without one made me learn how routing, shared layouts, SEO metadata, and forms actually work on the web.</li>
+                        <li><strong>Longevity.</strong> A folder of HTML files will still open in a browser in ten years. There are no dependencies to update and no build tool that can break.</li>
+                        <li><strong>Speed.</strong> The browser downloads finished HTML, so there is nothing to hydrate or render on the client before the article appears.</li>
+                    </ul>
+                    <p>The trade-off is that I have to solve some problems myself that a framework would normally solve for me. The rest of this article covers how I did that.</p>
+
+                    <h2>Routing is just folders</h2>
+                    <p>The site has no router. Each URL maps directly to a folder with an <code>index.html</code> inside it:</p>
+                    <pre><code data-language="Text">tech-blog/
+├── index.html                      → /
+├── about/index.html                → /about/
+├── posts/index.html                → /posts/
+└── posts/javascript-variables/
+    └── index.html                  → /posts/javascript-variables/</code></pre>
+                    <p>Web servers return <code>index.html</code> automatically when someone requests a folder, so these clean URLs come for free. In <code>netlify.toml</code> I also turn on Netlify's <code>pretty_urls</code> option, which keeps URLs consistent without the <code>.html</code> extension.</p>
+
+                    <h2>Two sources of content</h2>
+                    <p>This is the most important design decision on the site. Every post exists in two places:</p>
+                    <ol>
+                        <li><strong>A real HTML page</strong> containing the full article, its <code>&lt;title&gt;</code>, meta description, Open Graph tags, and JSON-LD structured data.</li>
+                        <li><strong>A small metadata object</strong> in <code>assets/js/posts.js</code> describing the post for listing pages.</li>
+                    </ol>
+                    <pre><code data-language="JavaScript">export const posts = [
+    {
+        id: "javascript-array-methods",
+        title: "JavaScript Array Methods Explained",
+        type: "tutorial",
+        excerpt: "A practical, beginner-friendly walkthrough...",
+        publishedAt: "2026-07-16",
+        thumbnail: "/assets/images/posts/javascript-array-methods.svg",
+        url: "/posts/javascript-array-methods/",
+        featured: true,
+        tags: ["JavaScript", "Frontend", "Tutorial"]
+    }
+    // ...one object per post
+];</code></pre>
+                    <p>The homepage, the archive, the related-posts section, the post counts, and the "older post / newer post" links are all generated from this array. To publish a post, I add one object, and every listing updates.</p>
+                    <p>Why not generate the whole page from JavaScript? Because search engines and social media crawlers should never have to run JavaScript to read an article. When someone shares a post on LinkedIn, LinkedIn's crawler reads the Open Graph tags straight from the HTML. Keeping the important content in the HTML file means it is always readable, even with JavaScript turned off.</p>
+
+                    <h2>Shared header and footer with fetch()</h2>
+                    <p>Without a templating system, the obvious way to share a header between pages is to copy and paste it into every file. That works until you want to add a menu link and have to edit every page by hand.</p>
+                    <p>Instead, each page contains an empty placeholder:</p>
+                    <pre><code data-language="HTML">&lt;div data-component="/components/header.html"&gt;&lt;/div&gt;</code></pre>
+                    <p>A small script, <code>components.js</code>, finds every placeholder, downloads the partial, and inserts it:</p>
+                    <pre><code data-language="JavaScript">async function loadComponent(element) {
+    const componentUrl = element.dataset.component;
+
+    try {
+        const response = await fetch(componentUrl);
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        element.innerHTML = await response.text();
+    } catch (error) {
+        console.error(`Could not load shared component: ${componentUrl}`, error);
+        element.innerHTML = `&lt;div class="component-error" role="alert"&gt;...&lt;/div&gt;`;
+    }
+}
+
+async function loadAllComponents() {
+    const elements = [...document.querySelectorAll("[data-component]")];
+    await Promise.all(elements.map(loadComponent));
+    document.dispatchEvent(new CustomEvent("components:loaded"));
+}</code></pre>
+                    <p>Two details matter here. First, the paths are root-relative (they start with <code>/</code>), so <code>/components/header.html</code> resolves to the same file whether the page is at <code>/</code> or three folders deep. Second, once every component has loaded, the script fires a custom <code>components:loaded</code> event. The navigation script waits for that event before wiring up the mobile menu, because the menu button does not exist until the header has been inserted.</p>
+                    <p>For visitors without JavaScript, each header placeholder also contains a <code>&lt;noscript&gt;</code> block with plain navigation links, so nobody gets stuck on a page with no way out.</p>
+
+                    <h2>SEO without a plugin</h2>
+                    <p>Frameworks often come with an SEO plugin. Here, every page writes its own metadata by hand:</p>
+                    <ul>
+                        <li>A unique <code>&lt;title&gt;</code> and meta description</li>
+                        <li>A canonical URL</li>
+                        <li>Open Graph and Twitter/X tags for social previews</li>
+                        <li>JSON-LD structured data describing the page as an <code>Article</code>, <code>VideoObject</code>, or <code>PodcastEpisode</code>, plus a breadcrumb trail</li>
+                    </ul>
+                    <p>The site also has a hand-maintained <code>sitemap.xml</code>, <code>feed.xml</code> RSS feed, <code>robots.txt</code>, and <code>site.webmanifest</code>. It is more typing than installing a plugin, but I understand every line, and I know exactly what a crawler sees.</p>
+
+                    <h2>A contact form with no backend</h2>
+                    <p>The contact form needed somewhere to send submissions, and I did not want to run a server. Netlify Forms solves this. Netlify scans the HTML at deploy time, finds any form marked with <code>data-netlify="true"</code>, and collects its submissions for me:</p>
+                    <pre><code data-language="HTML">&lt;form name="contact" method="POST" action="/success/"
+      data-netlify="true" netlify-honeypot="bot-field"&gt;
+    &lt;p hidden&gt;
+        &lt;label&gt;Do not fill this out: &lt;input name="bot-field"&gt;&lt;/label&gt;
+    &lt;/p&gt;
+    &lt;!-- name, email, and message fields --&gt;
+&lt;/form&gt;</code></pre>
+                    <p>The hidden <code>bot-field</code> is a honeypot. People never see it, but spam bots that fill in every field will, and Netlify quietly discards those submissions.</p>
+
+                    <h2>Deployment: one config file</h2>
+                    <p>The whole deployment setup is <code>netlify.toml</code>. It tells Netlify to publish the repository root as-is, and it sets HTTP headers. Assets in <code>/assets/</code> are cached for a year, while HTML pages are always revalidated, so new posts appear straight away. Every push to <code>main</code> on GitHub triggers a new deploy.</p>
+
+                    <h2>What has gone wrong</h2>
+                    <p>The biggest weakness of this architecture is duplication. A post's slug, title, and thumbnail live in the HTML page, in <code>posts.js</code>, in the sitemap, and in the RSS feed. Nothing checks that they agree, and I have already been caught out twice:</p>
+                    <ul>
+                        <li><strong>A broken link.</strong> My variables tutorial lived in a folder called <code>variable-explained</code>, but its entry in <code>posts.js</code> pointed to <code>/posts/javascript-variables/</code>. Every card and "next post" link sent readers to a 404 page until I renamed the folder to match.</li>
+                        <li><strong>A missing thumbnail.</strong> The same post's metadata pointed to a <code>.webp</code> thumbnail, but the file I had actually added was a <code>.png</code>. The card on the homepage showed a broken image.</li>
+                    </ul>
+                    <p>A framework or a build step would catch mistakes like these automatically. Without one, I rely on a checklist, careful testing, and clicking every new link before I push.</p>
+
+                    <div class="callout">
+                        <h2>Other trade-offs to know about</h2>
+                        <ul>
+                            <li>Opening a page straight from your file system (<code>file://</code>) breaks the shared header, because browsers block <code>fetch()</code> there. You need a local server, such as <code>python -m http.server</code>.</li>
+                            <li>The header appears a moment after the page, because it is fetched separately.</li>
+                            <li>Every page repeats the same <code>&lt;head&gt;</code> boilerplate.</li>
+                            <li>There is no Markdown. Every post is written directly in HTML.</li>
+                        </ul>
+                    </div>
+
+                    <h2>Would I do it again?</h2>
+                    <p>For a learning project, absolutely. I now understand what frameworks do for me, which makes me a better judge of when to reach for one. If this blog grows to dozens of posts, the duplication will become painful, and I will probably add a small static site generator that builds <code>posts.js</code>, the sitemap, and the feed from a single source. Until then, plain HTML, CSS, and JavaScript are doing the job.</p>
+
+                    <h2>Related resources</h2>
+                    <ul class="resource-list">
+                        <li><a href="https://github.com/nnamdi-security/tech-blog">The source code for this blog on GitHub</a></li>
+                        <li><a href="https://docs.netlify.com/forms/setup/">Netlify Docs: Forms setup</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">MDN: Using the Fetch API</a></li>
+                        <li><a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data">Google Search Central: Introduction to structured data</a></li>
+                    </ul>
+
+                    <div class="share-links" aria-label="Share this article">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fbuilding-a-blog-without-a-framework%2F">Share on LinkedIn</a>
+                        <a href="https://x.com/intent/post?url=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fbuilding-a-blog-without-a-framework%2F&amp;text=How%20I%20Built%20This%20Blog%20Without%20a%20Framework">Share on X</a>
+                        <a href="mailto:?subject=How%20I%20Built%20This%20Blog%20Without%20a%20Framework&amp;body=https%3A%2F%2Ftechbrosis.netlify.app%2Fposts%2Fbuilding-a-blog-without-a-framework%2F">Share by email</a>
+                    </div>
+                    <nav class="post-navigation" aria-label="Previous and next posts" data-post-navigation></nav>
+                </article>
+
+                <aside class="post-sidebar" aria-label="Article summary">
+                    <section class="info-card"><h2>Article details</h2><p><strong>Level:</strong> Beginner to intermediate</p><p><strong>Reading time:</strong> 9 minutes</p><p><strong>Focus:</strong> Static site architecture</p></section>
+                    <section class="info-card"><h2>The stack</h2><p>HTML5, CSS, vanilla JavaScript modules, Netlify hosting, and Netlify Forms. No framework, build step, or package manager.</p></section>
+                </aside>
+            </div>
+        </section>
+
+        <section class="related-posts" aria-labelledby="related-heading"><div class="container"><div class="section-heading"><div><span class="eyebrow">Keep improving</span><h2 id="related-heading">Related posts</h2></div></div><div class="post-grid" data-related-posts></div></div></section>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+    <script src="/assets/js/components.js" defer></script>
+    <script src="/assets/js/navigation.js" defer></script>
+    <script type="module" src="/assets/js/post-renderer.js"></script>
+    <script src="/assets/js/copy-code.js" defer></script>
+</body>
+</html>

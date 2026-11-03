@@ -5,8 +5,29 @@
         <link>https://techbrosis.netlify.app/</link>
         <description>Practical programming tutorials, technology podcasts, and thoughtful articles.</description>
         <language>en</language>
-        <lastBuildDate>Sat, 18 Jul 2026 10:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 03 Nov 2026 10:00:00 GMT</lastBuildDate>
         <atom:link href="https://techbrosis.netlify.app/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Web Security Basics for Front-End Beginners</title>
+            <link>https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/</link>
+            <guid>https://techbrosis.netlify.app/posts/web-security-basics-for-beginners/</guid>
+            <pubDate>Tue, 03 Nov 2026 10:00:00 GMT</pubDate>
+            <description>Learn what XSS is, why innerHTML can be dangerous, and how HTTP security headers protect a static website.</description>
+        </item>
+        <item>
+            <title>How I Built This Blog Without a Framework</title>
+            <link>https://techbrosis.netlify.app/posts/building-a-blog-without-a-framework/</link>
+            <guid>https://techbrosis.netlify.app/posts/building-a-blog-without-a-framework/</guid>
+            <pubDate>Tue, 03 Nov 2026 10:00:00 GMT</pubDate>
+            <description>A behind-the-scenes look at how this blog runs on plain HTML, CSS, and JavaScript, with no framework or build step.</description>
+        </item>
+        <item>
+            <title>Git and GitHub for Beginners: The Mistakes I Made So You Don't Have To</title>
+            <link>https://techbrosis.netlify.app/posts/git-and-github-beginner-mistakes/</link>
+            <guid>https://techbrosis.netlify.app/posts/git-and-github-beginner-mistakes/</guid>
+            <pubDate>Tue, 03 Nov 2026 10:00:00 GMT</pubDate>
+            <description>Real Git mistakes from this blog's own commit history, and how to avoid each one.</description>
+        </item>
         <item>
             <title>Understanding Variables in JavaScript | Nnamdi's Dev Notes</title>
             <link>https://techbrosis.netlify.app/posts/javascript-variables/</link>
