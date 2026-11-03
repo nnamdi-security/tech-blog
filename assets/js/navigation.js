@@ -1,11 +1,16 @@
 "use strict";
 
-function normalizePath(pathname) {
-    if (pathname === "/index.html") {
-        return "/";
-    }
+// Path of the site root: "/" on Netlify, "/tech-blog/" on GitHub Pages.
+function getRootPath() {
+    return new URL(window.siteRoot ?? "/", window.location.href).pathname;
+}
 
-    return pathname.replace(/index\.html$/, "").replace(/\/+$/, "") || "/";
+// Returns a path relative to the site root, e.g. "/" or "/posts".
+function normalizePath(pathname) {
+    const rootPath = getRootPath();
+    const relativePath = pathname.startsWith(rootPath) ? pathname.slice(rootPath.length - 1) : pathname;
+
+    return relativePath.replace(/index\.html$/, "").replace(/\/+$/, "") || "/";
 }
 
 function setActiveNavigationLink() {

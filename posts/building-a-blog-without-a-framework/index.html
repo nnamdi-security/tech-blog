@@ -17,11 +17,11 @@
     <meta name="twitter:title" content="How I Built This Blog Without a Framework">
     <meta name="twitter:description" content="Plain HTML, CSS, and JavaScript on Netlify: the architecture, the trade-offs, and the bugs.">
     <meta name="twitter:image" content="https://techbrosis.netlify.app/assets/images/posts/building-blog-without-framework.jpg">
-    <link rel="icon" href="/assets/images/branding/favicon.svg" type="image/svg+xml">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="/feed.xml">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/post.css">
+    <link rel="icon" href="../../assets/images/branding/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="../../site.webmanifest">
+    <link rel="alternate" type="application/rss+xml" title="Nnamdi's Dev Notes RSS feed" href="../../feed.xml">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/post.css">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -48,13 +48,13 @@
     </script>
 </head>
 <body data-current-post="building-a-blog-without-a-framework">
-    <div data-component="/components/header.html">
+    <div data-component="../../components/header.html">
         <noscript>
             <nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
-                <a href="/">Home</a>
-                <a href="/posts/">All posts</a>
-                <a href="/about/">About</a>
-                <a href="/contact/">Contact</a>
+                <a href="../../">Home</a>
+                <a href="../../posts/">All posts</a>
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
             </nav>
         </noscript>
     </div>
@@ -62,16 +62,16 @@
     <main id="main-content">
         <header class="post-header">
             <div class="container post-header__inner">
-                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li aria-current="page">Building Without a Framework</li></ol></nav>
+                <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../posts/">Posts</a></li><li aria-current="page">Building Without a Framework</li></ol></nav>
                 <span class="eyebrow">Written article</span>
                 <h1>How I Built This Blog Without a Framework</h1>
                 <p class="post-header__description">A behind-the-scenes look at how this blog runs on plain HTML, CSS, and JavaScript, with no framework, no build step, and no package manager.</p>
                 <div class="post-meta"><span>Nnamdi Ileh</span><time datetime="2026-11-03">3 November 2026</time><span>9 min read</span></div>
-                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="/posts/?tag=HTML">HTML</a></li><li><a class="tag" href="/posts/?tag=JavaScript">JavaScript</a></li><li><a class="tag" href="/posts/?tag=Netlify">Netlify</a></li><li><a class="tag" href="/posts/?tag=Case%20Study">Case Study</a></li></ul>
+                <ul class="tag-list" aria-label="Post tags"><li><a class="tag" href="../../posts/?tag=HTML">HTML</a></li><li><a class="tag" href="../../posts/?tag=JavaScript">JavaScript</a></li><li><a class="tag" href="../../posts/?tag=Netlify">Netlify</a></li><li><a class="tag" href="../../posts/?tag=Case%20Study">Case Study</a></li></ul>
             </div>
         </header>
 
-        <figure class="post-cover"><img src="/assets/images/posts/building-blog-without-framework.webp" alt="Thumbnail reading No Framework. No Build Step. Just HTML, CSS and JS, with a zero dependencies badge" width="960" height="600"></figure>
+        <figure class="post-cover"><img src="../../assets/images/posts/building-blog-without-framework.webp" alt="Thumbnail reading No Framework. No Build Step. Just HTML, CSS and JS, with a zero dependencies badge" width="960" height="600"></figure>
 
         <section class="section">
             <div class="container post-layout">
@@ -124,7 +124,8 @@
                     <h2>Shared header and footer with fetch()</h2>
                     <p>Without a templating system, the obvious way to share a header between pages is to copy and paste it into every file. That works until you want to add a menu link and have to edit every page by hand.</p>
                     <p>Instead, each page contains an empty placeholder:</p>
-                    <pre><code data-language="HTML">&lt;div data-component="/components/header.html"&gt;&lt;/div&gt;</code></pre>
+                    <pre><code data-language="HTML">&lt;!-- On a post page, two folders below the site root --&gt;
+&lt;div data-component="../../components/header.html"&gt;&lt;/div&gt;</code></pre>
                     <p>A small script, <code>components.js</code>, finds every placeholder, downloads the partial, and inserts it:</p>
                     <pre><code data-language="JavaScript">async function loadComponent(element) {
     const componentUrl = element.dataset.component;
@@ -148,7 +149,7 @@ async function loadAllComponents() {
     await Promise.all(elements.map(loadComponent));
     document.dispatchEvent(new CustomEvent("components:loaded"));
 }</code></pre>
-                    <p>Two details matter here. First, the paths are root-relative (they start with <code>/</code>), so <code>/components/header.html</code> resolves to the same file whether the page is at <code>/</code> or three folders deep. Second, once every component has loaded, the script fires a custom <code>components:loaded</code> event. The navigation script waits for that event before wiring up the mobile menu, because the menu button does not exist until the header has been inserted.</p>
+                    <p>Two details matter here. First, the paths are <em>relative</em> (<code>../../components/header.html</code> on a post page), and the header itself uses root-style links like <code>/posts/</code>. Before inserting it, the script works out where the site root is from its own URL and rewrites those links to point there. That means the same files work whether the site lives at a domain root or inside a sub-folder. Second, once every component has loaded, the script fires a custom <code>components:loaded</code> event. The navigation script waits for that event before wiring up the mobile menu, because the menu button does not exist until the header has been inserted.</p>
                     <p>For visitors without JavaScript, each header placeholder also contains a <code>&lt;noscript&gt;</code> block with plain navigation links, so nobody gets stuck on a page with no way out.</p>
 
                     <h2>SEO without a plugin</h2>
@@ -176,10 +177,11 @@ async function loadAllComponents() {
                     <p>The whole deployment setup is <code>netlify.toml</code>. It tells Netlify to publish the repository root as-is, and it sets HTTP headers. Assets in <code>/assets/</code> are cached for a year, while HTML pages are always revalidated, so new posts appear straight away. Every push to <code>main</code> on GitHub triggers a new deploy.</p>
 
                     <h2>What has gone wrong</h2>
-                    <p>The biggest weakness of this architecture is duplication. A post's slug, title, and thumbnail live in the HTML page, in <code>posts.js</code>, in the sitemap, and in the RSS feed. Nothing checks that they agree, and I have already been caught out twice:</p>
+                    <p>The biggest weakness of this architecture is duplication. A post's slug, title, and thumbnail live in the HTML page, in <code>posts.js</code>, in the sitemap, and in the RSS feed. Nothing checks that they agree, and I have already been caught out more than once:</p>
                     <ul>
                         <li><strong>A broken link.</strong> My variables tutorial lived in a folder called <code>variable-explained</code>, but its entry in <code>posts.js</code> pointed to <code>/posts/javascript-variables/</code>. Every card and "next post" link sent readers to a 404 page until I renamed the folder to match.</li>
                         <li><strong>A missing thumbnail.</strong> The same post's metadata pointed to a <code>.webp</code> thumbnail, but the file I had actually added was a <code>.png</code>. The card on the homepage showed a broken image.</li>
+                        <li><strong>A site with no styles.</strong> I originally used root-relative paths everywhere, such as <code>/assets/css/styles.css</code>. That works on Netlify, which serves the site from the domain root. When I also published the repository with GitHub Pages, which serves it from a sub-folder (<code>/tech-blog/</code>), every one of those paths pointed one level too high. The pages loaded with no CSS, no JavaScript, and no header. Switching to relative paths fixed it on both hosts.</li>
                     </ul>
                     <p>A framework or a build step would catch mistakes like these automatically. Without one, I rely on a checklist, careful testing, and clicking every new link before I push.</p>
 
@@ -222,10 +224,10 @@ async function loadAllComponents() {
         <section class="related-posts" aria-labelledby="related-heading"><div class="container"><div class="section-heading"><div><span class="eyebrow">Keep improving</span><h2 id="related-heading">Related posts</h2></div></div><div class="post-grid" data-related-posts></div></div></section>
     </main>
 
-    <div data-component="/components/footer.html"></div>
-    <script src="/assets/js/components.js" defer></script>
-    <script src="/assets/js/navigation.js" defer></script>
-    <script type="module" src="/assets/js/post-renderer.js"></script>
-    <script src="/assets/js/copy-code.js" defer></script>
+    <div data-component="../../components/footer.html"></div>
+    <script src="../../assets/js/components.js" defer></script>
+    <script src="../../assets/js/navigation.js" defer></script>
+    <script type="module" src="../../assets/js/post-renderer.js"></script>
+    <script src="../../assets/js/copy-code.js" defer></script>
 </body>
 </html>

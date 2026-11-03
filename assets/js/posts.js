@@ -136,6 +136,18 @@ export const posts = [
 
 ];
 
+// The site root, worked out from this file's URL (<root>/assets/js/posts.js),
+// so post links and thumbnails work on Netlify and on GitHub Pages.
+const SITE_ROOT = new URL("../../", import.meta.url);
+
+/**
+ * Turns a root-relative path from the data above, such as "/posts/my-post/",
+ * into a full URL inside the site root.
+ */
+export function resolveSitePath(path) {
+    return path.startsWith("/") ? new URL(path.slice(1), SITE_ROOT).href : path;
+}
+
 export function getSortedPosts() {
     return [...posts].sort(
         (firstPost, secondPost) => new Date(secondPost.publishedAt) - new Date(firstPost.publishedAt)

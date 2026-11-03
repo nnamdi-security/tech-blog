@@ -1,8 +1,31 @@
 "use strict";
 
 /**
+ * The site root, worked out from this script's own URL (it lives at
+ * <root>/assets/js/components.js). This lets the site run from a domain
+ * root (Netlify) or from a sub-folder (GitHub Pages: /tech-blog/).
+ */
+const SITE_ROOT = new URL("../../", document.currentScript.src);
+window.siteRoot = SITE_ROOT.href;
+
+/**
+ * Shared partials are written with root-relative links such as "/posts/".
+ * Rewrite them so they point inside the site root wherever it is hosted.
+ */
+function resolveRootRelativeLinks(container) {
+    container.querySelectorAll("[href^='/'], [src^='/']").forEach((element) => {
+        ["href", "src"].forEach((attribute) => {
+            const value = element.getAttribute(attribute);
+
+            if (value && value.startsWith("/") && !value.startsWith("//")) {
+                element.setAttribute(attribute, new URL(value.slice(1), SITE_ROOT).href);
+            }
+        });
+    });
+}
+
+/**
  * Loads shared HTML partials into elements that declare data-component.
- * Root-relative paths work from nested pages on Netlify.
  */
 async function loadComponent(element) {
     const componentUrl = element.dataset.component;
@@ -19,6 +42,7 @@ async function loadComponent(element) {
         }
 
         element.innerHTML = await response.text();
+        resolveRootRelativeLinks(element);
         element.dataset.componentLoaded = "true";
     } catch (error) {
         console.error(`Could not load shared component: ${componentUrl}`, error);
